@@ -6,7 +6,24 @@ const path = require("path");
 const fs = require("fs");
 
 const app = express();
-app.use(cors({origin: "https://markov-6d9bxvgy2-jzrys-projects.vercel.app"}));
+
+const allowedOrigins = [
+    "https://markov-ob5jkdn27-jzrys-projects.vercel.app",
+    "https://markov-two.vercel.app"
+];
+
+// Middleware required to route all requests.
+app.use(cors({origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin))
+        {
+            callback(null, true);
+        }
+        else
+        {
+          callback(new Error("Not allowed by CORS"));
+        }
+    }
+}));
 
 // Configure multer to save uploaded files to 'uploads/' directory
 const upload = multer({ dest: "uploads/" });
