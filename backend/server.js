@@ -6,7 +6,7 @@ const path = require("path");
 const fs = require("fs");
 
 const app = express();
-app.use(cors({origin: "https://markov-two.vercel.app"}));
+app.use(cors({origin: "https://markov-6d9bxvgy2-jzrys-projects.vercel.app"}));
 
 // Configure multer to save uploaded files to 'uploads/' directory
 const upload = multer({ dest: "uploads/" });

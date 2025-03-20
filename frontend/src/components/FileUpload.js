@@ -13,7 +13,7 @@ const FileUpload = () => {
         const formData = new FormData();
         formData.append("file", file);
 
-        const response = await fetch("https://markov-mt1a.onrender.com", {
+        const response = await fetch("https://markov-mt1a.onrender.com/upload", {
             method: "POST",
             body: formData,
         });
