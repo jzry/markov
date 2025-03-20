@@ -8,22 +8,34 @@ const fs = require("fs");
 const app = express();
 
 const allowedOrigins = [
-    "https://markov-ob5jkdn27-jzrys-projects.vercel.app",
     "https://markov-two.vercel.app"
 ];
 
-// Middleware required to route all requests.
-app.use(cors({origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin))
-        {
-            callback(null, true);
-        }
-        else
-        {
-          callback(new Error("Not allowed by CORS"));
-        }
+// // Middleware required to route all requests.
+// app.use(cors({origin: function (origin, callback) {
+//         if (!origin || allowedOrigins.includes(origin))
+//         {
+//             callback(null, true);
+//         }
+//         else
+//         {
+//           callback(new Error("Not allowed by CORS"));
+//         }
+//     }
+// }));
+
+app.use(function(req, res, next) {
+    // res.header("Access-Control-Allow-Origin", "*");
+    const allowedOrigins = ['http://localhost:8080', 'http://markov-mt1a.onrender.com/', 'https://markov-mt1a.onrender.com/'];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+         res.setHeader('Access-Control-Allow-Origin', origin);
     }
-}));
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.header("Access-Control-Allow-credentials", true);
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, UPDATE");
+    next();
+});
 
 // Configure multer to save uploaded files to 'uploads/' directory
 const upload = multer({ dest: "uploads/" });
